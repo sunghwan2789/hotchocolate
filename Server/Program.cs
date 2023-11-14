@@ -8,6 +8,7 @@ builder.Services.AddGraphQLServer()
     .AddQueryType(_ => _.Field("foo").Resolve(1))
     .AddSubscriptionType<Subscription>()
     ;
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -40,7 +41,9 @@ public class Subscription {
     [Subscribe(With = nameof(BarStream))]
     public int Bar([EventMessage] int message) => message;
 
-    private static async IAsyncEnumerable<int> BarStream([EnumeratorCancellation] CancellationToken cancellationToken) {
+    private static async IAsyncEnumerable<int> BarStream([Service] IHttpContextAccessor contextAccessor, [EnumeratorCancellation] CancellationToken cancellationToken) {
+        var context = contextAccessor.HttpContext;
+        Console.WriteLine(context?.TraceIdentifier);
         var i = 0; 
         while (!cancellationToken.IsCancellationRequested) {
             yield return i++;
