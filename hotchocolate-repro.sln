@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server", "Server\Server.csproj", "{FC1489AB-EACC-4CDA-A175-C763425B12DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KestrelServer", "KestrelServer\KestrelServer.csproj", "{54FE484B-432F-4986-812A-62B7B3DD732B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{FC1489AB-EACC-4CDA-A175-C763425B12DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FC1489AB-EACC-4CDA-A175-C763425B12DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FC1489AB-EACC-4CDA-A175-C763425B12DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54FE484B-432F-4986-812A-62B7B3DD732B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54FE484B-432F-4986-812A-62B7B3DD732B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54FE484B-432F-4986-812A-62B7B3DD732B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54FE484B-432F-4986-812A-62B7B3DD732B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
