@@ -41,13 +41,15 @@ public class Subscription {
     [Subscribe(With = nameof(BarStream))]
     public int Bar([EventMessage] int message) => message;
 
-    private static async IAsyncEnumerable<int> BarStream([Service] IHttpContextAccessor contextAccessor, [EnumeratorCancellation] CancellationToken cancellationToken) {
+    private static async IAsyncEnumerable<int> BarStream([Service] IHttpContextAccessor contextAccessor, [Service] IHostApplicationLifetime lifetime, [EnumeratorCancellation] CancellationToken cancellationToken) {
+        using var cts = CancellationTokenSource.CreateLinkedTokenSource(lifetime.ApplicationStopping, cancellationToken);
         var context = contextAccessor.HttpContext;
         Console.WriteLine(context?.TraceIdentifier);
         var i = 0; 
-        while (!cancellationToken.IsCancellationRequested) {
+        while (!cts.Token.IsCancellationRequested) {
             yield return i++;
-            await Task.Delay(1000, cancellationToken);
+            await Task.Delay(1000, cts.Token);
+            // await Task.Delay(1000);
         }
     }
 }

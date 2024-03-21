@@ -27,12 +27,13 @@ async Task DoSubscription(CancellationToken stopped) {
     }
 }
 
-async IAsyncEnumerable<int> Bar(IHttpContextAccessor contextAccessor, [EnumeratorCancellation] CancellationToken cancellationToken) {
+async IAsyncEnumerable<int> Bar(IHttpContextAccessor contextAccessor, IHostApplicationLifetime lifetime, [EnumeratorCancellation] CancellationToken cancellationToken) {
+    using var cts = CancellationTokenSource.CreateLinkedTokenSource(lifetime.ApplicationStopping, cancellationToken);
     var context = contextAccessor.HttpContext;
     Console.WriteLine(context?.TraceIdentifier);
     var i = 0; 
-    while (!cancellationToken.IsCancellationRequested) {
+    while (!cts.Token.IsCancellationRequested) {
         yield return i++;
-        await Task.Delay(1000, cancellationToken);
+        await Task.Delay(1000, cts.Token);
     }
 }
